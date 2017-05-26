@@ -1,27 +1,26 @@
-#include <bits/stdc++.h>
-#define ll long long int
+#include <stdio.h>
 using namespace std;
-
-int k,n,ar[25];
-int gcd(int a, int b){
-    if(!(a%b)) return b;
-    return gcd(b,a%b);
-}
-ll lcm(int a, int b){
-    return ((ll)a*b)/gcd(max(a,b),min(a,b));
-}
-int rec(int i, bool add, ll lc){
-    if(i>k||lc>n) return 0;
-    ll newlc=lcm(lc,ar[i]);
-    int c=n/newlc;
-    if(!add)c=-c;
-    c+=rec(i+1,!add,newlc)+rec(i+1,add,lc);
-    return c;
-}
-int main() {
-    scanf("%d%d",&n,&k);
-    for(int i=1;i<=k;i++){
+int main()
+{
+    long long int n,flag=0;
+    int k,tmp=0;
+    scanf("%lld%d",&n,&k);
+    int *ar=new int[k];
+    for(int i=0;i<k;i++){
         scanf("%d",&ar[i]);
-    }n--;
-    printf("%d",n-rec(1,true,1));
+    }
+    for(int i=0;i<k;i++){
+        for(int j=1;j<=n;j+=ar[i]){
+            tmp=0;
+            for(int l=0;l<i;l++){
+                if(((j-1)%ar[l])==0){tmp=1;
+                break;
+                }
+            }
+            if(tmp==0)
+            flag++;
+        }
+    }
+    printf("%lld",(n-flag));
 }
+ 
